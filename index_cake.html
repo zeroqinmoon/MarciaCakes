@@ -1,0 +1,1036 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <meta name="description" content="Cardápio digital Marcia Cake's - Bolos, Salgados e Doces feitos sob encomenda em Euclides da Cunha, BA.">
+  <meta name="theme-color" content="#8B4513">
+  <title>Marcia Cake's | Cardápio Digital</title>
+
+  <!-- Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍰</text></svg>">
+
+  <!-- Bootstrap 5 CSS via CDN -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
+
+  <style>
+    /* ============================================
+       VARIÁVEIS E RESET
+       ============================================ */
+    :root {
+      --cor-primaria: #8B4513;
+      --cor-primaria-escura: #6b3410;
+      --cor-secundaria: #D2691E;
+      --cor-destaque: #E8B44F;
+      --cor-fundo: #FDF8F3;
+      --cor-fundo-alt: #F7EDE2;
+      --cor-texto: #2D1B0E;
+      --cor-texto-suave: #6B5744;
+      --cor-branco: #FFFFFF;
+      --sombra-suave: 0 4px 20px rgba(139, 69, 19, 0.08);
+      --sombra-media: 0 8px 30px rgba(139, 69, 19, 0.12);
+      --sombra-forte: 0 12px 40px rgba(139, 69, 19, 0.18);
+      --raio: 16px;
+      --raio-pequeno: 10px;
+      --transicao: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      --altura-header: 72px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; scroll-padding-top: 90px; }
+
+    body {
+      font-family: 'Poppins', system-ui, -apple-system, sans-serif;
+      background-color: var(--cor-fundo);
+      color: var(--cor-texto);
+      line-height: 1.6;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    h1, h2, h3, h4, h5 { font-family: 'Playfair Display', serif; font-weight: 700; }
+
+    img { max-width: 100%; height: auto; }
+
+    a { text-decoration: none; color: var(--cor-primaria); transition: var(--transicao); }
+    a:hover { color: var(--cor-secundaria); }
+
+    /* ============================================
+       ACESSIBILIDADE
+       ============================================ */
+    .skip-link {
+      position: absolute; top: -50px; left: 10px;
+      background: var(--cor-primaria); color: #fff;
+      padding: 10px 20px; border-radius: 8px; z-index: 9999;
+      transition: top 0.3s;
+    }
+    .skip-link:focus { top: 10px; color: #fff; }
+
+    :focus-visible {
+      outline: 3px solid var(--cor-destaque);
+      outline-offset: 2px;
+      border-radius: 4px;
+    }
+
+    /* ============================================
+       HEADER
+       ============================================ */
+    .header {
+      position: fixed; top: 0; left: 0; right: 0;
+      height: var(--altura-header);
+      background: rgba(253, 248, 243, 0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      box-shadow: 0 2px 20px rgba(139, 69, 19, 0.08);
+      z-index: 1030;
+      transition: var(--transicao);
+    }
+
+    .header.scrolled {
+      background: rgba(253, 248, 243, 0.98);
+      box-shadow: 0 4px 24px rgba(139, 69, 19, 0.14);
+    }
+
+    .navbar-brand { display: flex; align-items: center; gap: 10px; font-family: 'Playfair Display', serif; font-size: 1.4rem; font-weight: 800; color: var(--cor-primaria) !important; }
+    .navbar-brand:hover { color: var(--cor-secundaria) !important; }
+    .brand-icon { width: 42px; height: 42px; background: linear-gradient(135deg, var(--cor-primaria), var(--cor-secundaria)); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; color: #fff; box-shadow: 0 4px 12px rgba(139, 69, 19, 0.25); }
+
+    .header .nav-link { color: var(--cor-texto) !important; font-weight: 500; padding: 8px 16px !important; border-radius: 8px; transition: var(--transicao); position: relative; }
+    .header .nav-link:hover, .header .nav-link.active { color: var(--cor-primaria) !important; background: rgba(139, 69, 19, 0.06); }
+    .header .nav-link.active::after { content: ''; position: absolute; bottom: 2px; left: 50%; transform: translateX(-50%); width: 20px; height: 3px; background: var(--cor-destaque); border-radius: 2px; }
+
+    .btn-whatsapp-header {
+      background: #25D366; color: #fff !important;
+      padding: 8px 18px; border-radius: 50px;
+      font-weight: 600; display: inline-flex; align-items: center; gap: 6px;
+      box-shadow: 0 4px 14px rgba(37, 211, 102, 0.35);
+      transition: var(--transicao);
+    }
+    .btn-whatsapp-header:hover { background: #1ebe5d; color: #fff !important; transform: translateY(-2px); box-shadow: 0 6px 20px rgba(37, 211, 102, 0.45); }
+
+    /* ============================================
+       HERO
+       ============================================ */
+    .hero {
+      padding: calc(var(--altura-header) + 40px) 0 60px;
+      background: linear-gradient(135deg, #FDF8F3 0%, #F7EDE2 50%, #F0E0CE 100%);
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before { content: ''; position: absolute; top: -50%; right: -20%; width: 600px; height: 600px; background: radial-gradient(circle, rgba(232, 180, 79, 0.15) 0%, transparent 70%); border-radius: 50%; pointer-events: none; }
+    .hero::after { content: ''; position: absolute; bottom: -30%; left: -10%; width: 400px; height: 400px; background: radial-gradient(circle, rgba(139, 69, 19, 0.08) 0%, transparent 70%); border-radius: 50%; pointer-events: none; }
+
+    .hero-title { font-size: clamp(2rem, 6vw, 3.5rem); color: var(--cor-primaria); line-height: 1.15; margin-bottom: 12px; }
+    .hero-subtitle { font-size: clamp(1rem, 3vw, 1.25rem); color: var(--cor-texto-suave); font-weight: 400; margin-bottom: 8px; }
+    .hero-tagline { display: inline-block; background: linear-gradient(135deg, var(--cor-destaque), var(--cor-secundaria)); color: #fff; padding: 6px 18px; border-radius: 50px; font-size: 0.85rem; font-weight: 600; letter-spacing: 0.5px; margin-bottom: 16px; box-shadow: 0 4px 14px rgba(210, 105, 30, 0.3); }
+
+    .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 24px; }
+
+    .btn-hero-primary {
+      background: linear-gradient(135deg, var(--cor-primaria), var(--cor-secundaria));
+      color: #fff; border: none; padding: 14px 32px; border-radius: 50px;
+      font-weight: 600; font-size: 1rem; display: inline-flex; align-items: center; gap: 8px;
+      box-shadow: 0 6px 20px rgba(139, 69, 19, 0.3);
+      transition: var(--transicao);
+    }
+    .btn-hero-primary:hover { color: #fff; transform: translateY(-3px); box-shadow: 0 10px 30px rgba(139, 69, 19, 0.4); }
+
+    .btn-hero-outline {
+      background: transparent; color: var(--cor-primaria); border: 2px solid var(--cor-primaria);
+      padding: 12px 30px; border-radius: 50px; font-weight: 600; font-size: 1rem;
+      display: inline-flex; align-items: center; gap: 8px;
+      transition: var(--transicao);
+    }
+    .btn-hero-outline:hover { background: var(--cor-primaria); color: #fff; transform: translateY(-3px); }
+
+    .hero-image-wrapper { position: relative; display: flex; justify-content: center; }
+    .hero-image { width: 100%; max-width: 420px; border-radius: 24px; box-shadow: var(--sombra-forte); object-fit: cover; aspect-ratio: 4/3; }
+    .hero-badge { position: absolute; bottom: -10px; left: 10px; background: #fff; padding: 12px 20px; border-radius: 14px; box-shadow: var(--sombra-media); display: flex; align-items: center; gap: 10px; font-size: 0.85rem; font-weight: 600; color: var(--cor-primaria); }
+    .hero-badge i { font-size: 1.4rem; color: var(--cor-destaque); }
+
+    /* ============================================
+       NAVEGAÇÃO DE CATEGORIAS (STICKY)
+       ============================================ */
+    .category-nav { position: sticky; top: var(--altura-header); z-index: 1020; background: rgba(253, 248, 243, 0.95); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); box-shadow: 0 4px 16px rgba(139, 69, 19, 0.06); padding: 12px 0; border-bottom: 1px solid rgba(139, 69, 19, 0.06); }
+    .category-nav-inner { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 4px; scrollbar-width: none; -ms-overflow-style: none; }
+    .category-nav-inner::-webkit-scrollbar { display: none; }
+
+    .category-chip {
+      flex-shrink: 0; display: inline-flex; align-items: center; gap: 6px;
+      padding: 10px 20px; border-radius: 50px; background: #fff;
+      border: 1.5px solid rgba(139, 69, 19, 0.15); color: var(--cor-texto-suave);
+      font-weight: 500; font-size: 0.9rem; cursor: pointer;
+      transition: var(--transicao); white-space: nowrap;
+    }
+    .category-chip:hover { border-color: var(--cor-secundaria); color: var(--cor-secundaria); transform: translateY(-2px); }
+    .category-chip.active { background: linear-gradient(135deg, var(--cor-primaria), var(--cor-secundaria)); border-color: transparent; color: #fff; box-shadow: 0 4px 16px rgba(139, 69, 19, 0.3); }
+    .category-chip i { font-size: 1rem; }
+
+    /* ============================================
+       SEÇÕES DO CARDÁPIO
+       ============================================ */
+    .menu-section { padding: 40px 0 20px; }
+    .menu-section-header { display: flex; align-items: center; gap: 14px; margin-bottom: 28px; }
+    .menu-section-icon { width: 50px; height: 50px; border-radius: 14px; background: linear-gradient(135deg, rgba(139, 69, 19, 0.1), rgba(210, 105, 30, 0.1)); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; color: var(--cor-primaria); flex-shrink: 0; }
+    .menu-section-title { font-size: clamp(1.4rem, 4vw, 1.9rem); color: var(--cor-primaria); margin: 0; }
+    .menu-section-desc { color: var(--cor-texto-suave); font-size: 0.9rem; margin: 0; }
+
+    /* ============================================
+       CARDS DE PRODUTOS
+       ============================================ */
+    .product-card {
+      background: #fff; border-radius: var(--raio); overflow: hidden;
+      box-shadow: var(--sombra-suave); border: 1px solid rgba(139, 69, 19, 0.06);
+      height: 100%; display: flex; flex-direction: column;
+      transition: var(--transicao); opacity: 0; transform: translateY(24px);
+    }
+    .product-card.visible { opacity: 1; transform: translateY(0); }
+    .product-card:hover { transform: translateY(-6px); box-shadow: var(--sombra-forte); }
+
+    .product-img-wrapper { position: relative; overflow: hidden; aspect-ratio: 16/10; background: var(--cor-fundo-alt); }
+    .product-img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
+    .product-card:hover .product-img { transform: scale(1.08); }
+
+    .product-badge { position: absolute; top: 12px; left: 12px; padding: 5px 12px; border-radius: 50px; font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; backdrop-filter: blur(6px); }
+    .badge-destaque { background: rgba(232, 180, 79, 0.95); color: #5a3a00; }
+    .badge-novo { background: rgba(37, 211, 102, 0.95); color: #fff; }
+    .badge-indisponivel { background: rgba(108, 117, 125, 0.9); color: #fff; }
+
+    .product-body { padding: 18px 18px 20px; display: flex; flex-direction: column; flex-grow: 1; }
+    .product-name { font-size: 1.15rem; font-weight: 700; color: var(--cor-texto); margin-bottom: 6px; font-family: 'Poppins', sans-serif; }
+    .product-desc { font-size: 0.85rem; color: var(--cor-texto-suave); line-height: 1.55; margin-bottom: 14px; flex-grow: 1; }
+
+    .product-footer { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-top: auto; }
+    .product-price { font-family: 'Playfair Display', serif; font-size: 1.35rem; font-weight: 800; color: var(--cor-primaria); }
+    .product-price small { font-size: 0.75rem; font-weight: 500; color: var(--cor-texto-suave); }
+
+    .btn-product {
+      background: linear-gradient(135deg, var(--cor-primaria), var(--cor-secundaria));
+      color: #fff; border: none; padding: 9px 18px; border-radius: 50px;
+      font-size: 0.82rem; font-weight: 600; display: inline-flex; align-items: center; gap: 5px;
+      transition: var(--transicao); white-space: nowrap;
+    }
+    .btn-product:hover { color: #fff; transform: scale(1.05); box-shadow: 0 6px 18px rgba(139, 69, 19, 0.35); }
+    .btn-product:active { transform: scale(0.97); }
+
+    /* ============================================
+       PROMOÇÕES
+       ============================================ */
+    .promo-card { background: linear-gradient(135deg, #fff 0%, #FFF9F0 100%); border: 1.5px dashed var(--cor-destaque); border-radius: var(--raio); padding: 24px; height: 100%; position: relative; overflow: hidden; transition: var(--transicao); }
+    .promo-card:hover { transform: translateY(-4px); box-shadow: var(--sombra-media); border-style: solid; }
+    .promo-badge { position: absolute; top: -12px; right: -12px; background: linear-gradient(135deg, #E8B44F, #D2691E); color: #fff; padding: 8px 18px; border-radius: 50px; font-size: 0.75rem; font-weight: 700; transform: rotate(8deg); box-shadow: 0 4px 14px rgba(210, 105, 30, 0.4); }
+    .promo-date { font-size: 0.8rem; color: var(--cor-secundaria); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; }
+    .promo-title { font-size: 1.3rem; color: var(--cor-primaria); margin-bottom: 8px; }
+    .promo-desc { font-size: 0.9rem; color: var(--cor-texto-suave); margin-bottom: 16px; }
+
+    /* ============================================
+       INSTAGRAM
+       ============================================ */
+    .instagram-section { background: linear-gradient(135deg, #F7EDE2 0%, #FDF8F3 100%); padding: 60px 0; }
+    .instagram-header { text-align: center; margin-bottom: 36px; }
+    .instagram-handle { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); color: #fff; padding: 8px 20px; border-radius: 50px; font-weight: 600; font-size: 0.95rem; margin-top: 12px; box-shadow: 0 6px 20px rgba(220, 39, 67, 0.3); transition: var(--transicao); }
+    .instagram-handle:hover { color: #fff; transform: translateY(-3px); box-shadow: 0 10px 30px rgba(220, 39, 67, 0.4); }
+
+    .insta-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+    @media (min-width: 576px) { .insta-grid { grid-template-columns: repeat(3, 1fr); } }
+    @media (min-width: 992px) { .insta-grid { grid-template-columns: repeat(6, 1fr); gap: 16px; } }
+
+    .insta-item { position: relative; border-radius: var(--raio-pequeno); overflow: hidden; aspect-ratio: 1; cursor: pointer; background: var(--cor-fundo-alt); }
+    .insta-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease; }
+    .insta-item:hover img { transform: scale(1.12); }
+    .insta-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.6), transparent 60%); opacity: 0; transition: var(--transicao); display: flex; align-items: flex-end; padding: 12px; color: #fff; font-size: 0.85rem; font-weight: 600; }
+    .insta-item:hover .insta-overlay { opacity: 1; }
+
+    /* ============================================
+       LOCALIZAÇÃO / CONTATO
+       ============================================ */
+    .contact-section { padding: 60px 0; }
+    .info-card { background: #fff; border-radius: var(--raio); padding: 28px; box-shadow: var(--sombra-suave); border: 1px solid rgba(139, 69, 19, 0.06); height: 100%; transition: var(--transicao); }
+    .info-card:hover { transform: translateY(-4px); box-shadow: var(--sombra-media); }
+    .info-icon { width: 52px; height: 52px; border-radius: 14px; background: linear-gradient(135deg, rgba(139, 69, 19, 0.1), rgba(210, 105, 30, 0.15)); display: flex; align-items: center; justify-content: center; font-size: 1.4rem; color: var(--cor-primaria); margin-bottom: 16px; }
+    .info-title { font-size: 1.1rem; font-weight: 700; color: var(--cor-texto); margin-bottom: 8px; font-family: 'Poppins', sans-serif; }
+    .info-text { font-size: 0.9rem; color: var(--cor-texto-suave); margin: 0; line-height: 1.6; }
+    .info-text a { color: var(--cor-secundaria); font-weight: 500; }
+
+    .map-wrapper { border-radius: var(--raio); overflow: hidden; box-shadow: var(--sombra-media); height: 100%; min-height: 320px; }
+    .map-wrapper iframe { width: 100%; height: 100%; min-height: 320px; border: 0; display: block; }
+
+    /* ============================================
+       FOOTER
+       ============================================ */
+    .footer { background: linear-gradient(135deg, #2D1B0E 0%, #4A2C15 100%); color: #E8DDD0; padding: 50px 0 0; }
+    .footer-brand { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 800; color: #fff; display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+    .footer-text { font-size: 0.88rem; color: #B8A894; line-height: 1.7; }
+    .footer-title { font-size: 1rem; font-weight: 700; color: #fff; margin-bottom: 16px; font-family: 'Poppins', sans-serif; }
+    .footer-links { list-style: none; padding: 0; margin: 0; }
+    .footer-links li { margin-bottom: 10px; }
+    .footer-links a { color: #B8A894; font-size: 0.88rem; transition: var(--transicao); display: inline-flex; align-items: center; gap: 6px; }
+    .footer-links a:hover { color: var(--cor-destaque); transform: translateX(4px); }
+
+    .social-links { display: flex; gap: 10px; margin-top: 16px; }
+    .social-link { width: 42px; height: 42px; border-radius: 50%; background: rgba(255,255,255,0.08); display: flex; align-items: center; justify-content: center; color: #fff; font-size: 1.1rem; transition: var(--transicao); }
+    .social-link:hover { color: #fff; transform: translateY(-3px); }
+    .social-link.whatsapp:hover { background: #25D366; box-shadow: 0 6px 18px rgba(37,211,102,0.4); }
+    .social-link.instagram:hover { background: linear-gradient(135deg, #f09433, #dc2743, #bc1888); box-shadow: 0 6px 18px rgba(220,39,67,0.4); }
+
+    .footer-bottom { border-top: 1px solid rgba(255,255,255,0.08); margin-top: 36px; padding: 20px 0; font-size: 0.82rem; color: #8A7560; }
+    .footer-bottom a { color: var(--cor-destaque); }
+
+    /* ============================================
+       BOTÕES FLUTUANTES
+       ============================================ */
+    .whatsapp-float {
+      position: fixed; bottom: 24px; right: 20px; z-index: 1040;
+      width: 60px; height: 60px; border-radius: 50%;
+      background: #25D366; color: #fff; display: flex; align-items: center; justify-content: center;
+      font-size: 1.7rem; box-shadow: 0 6px 24px rgba(37, 211, 102, 0.5);
+      transition: var(--transicao); animation: pulse-whatsapp 2s infinite;
+    }
+    .whatsapp-float:hover { color: #fff; transform: scale(1.1); box-shadow: 0 10px 32px rgba(37, 211, 102, 0.6); animation: none; }
+
+    @keyframes pulse-whatsapp {
+      0%, 100% { box-shadow: 0 6px 24px rgba(37, 211, 102, 0.5); }
+      50% { box-shadow: 0 6px 24px rgba(37, 211, 102, 0.5), 0 0 0 12px rgba(37, 211, 102, 0.12); }
+    }
+
+    .back-to-top {
+      position: fixed; bottom: 24px; left: 20px; z-index: 1040;
+      width: 48px; height: 48px; border-radius: 50%;
+      background: var(--cor-primaria); color: #fff; border: none;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.2rem; box-shadow: var(--sombra-media);
+      opacity: 0; visibility: hidden; transform: translateY(16px);
+      transition: var(--transicao);
+    }
+    .back-to-top.show { opacity: 1; visibility: visible; transform: translateY(0); }
+    .back-to-top:hover { background: var(--cor-secundaria); transform: translateY(-3px); }
+
+    /* ============================================
+       ANIMAÇÕES
+       ============================================ */
+    @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+    .animate-fade-up { animation: fadeInUp 0.7s cubic-bezier(0.4, 0, 0.2, 1) both; }
+    .delay-1 { animation-delay: 0.1s; }
+    .delay-2 { animation-delay: 0.2s; }
+    .delay-3 { animation-delay: 0.3s; }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
+    }
+
+    /* ============================================
+       RESPONSIVIDADE
+       ============================================ */
+    @media (max-width: 991.98px) {
+      .header .navbar-collapse { background: #fff; border-radius: 16px; padding: 16px; margin-top: 12px; box-shadow: var(--sombra-media); }
+      .header .nav-link { padding: 10px 14px !important; }
+      .header .nav-link.active::after { display: none; }
+      .btn-whatsapp-header { margin-top: 8px; width: 100%; justify-content: center; }
+    }
+
+    @media (max-width: 575.98px) {
+      :root { --altura-header: 64px; }
+      .hero { padding: calc(var(--altura-header) + 24px) 0 40px; }
+      .hero-actions { flex-direction: column; }
+      .hero-actions .btn-hero-primary, .hero-actions .btn-hero-outline { width: 100%; justify-content: center; }
+      .product-body { padding: 14px 14px 16px; }
+      .product-name { font-size: 1.05rem; }
+      .product-price { font-size: 1.2rem; }
+      .btn-product { padding: 8px 14px; font-size: 0.78rem; }
+      .whatsapp-float { width: 54px; height: 54px; font-size: 1.5rem; bottom: 18px; right: 16px; }
+      .back-to-top { width: 44px; height: 44px; bottom: 18px; left: 16px; }
+    }
+
+    /* Utilitários */
+    .text-gradient { background: linear-gradient(135deg, var(--cor-primaria), var(--cor-secundaria)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .section-divider { height: 1px; background: linear-gradient(to right, transparent, rgba(139,69,19,0.15), transparent); margin: 40px 0; }
+  </style>
+</head>
+<body>
+  <a href="#cardapio" class="skip-link">Pular para o cardápio</a>
+
+  <!-- ============================================
+       HEADER
+       ============================================ -->
+  <header class="header" id="header">
+    <nav class="navbar navbar-expand-lg container-fluid px-3 px-lg-4 h-100">
+      <div class="container h-100 align-items-center">
+        <a class="navbar-brand" href="#inicio" aria-label="Marcia Cake's - Início">
+          <span class="brand-icon" aria-hidden="true">🍰</span>
+          <span>Marcia Cake's</span>
+        </a>
+
+        <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#menuPrincipal" aria-controls="menuPrincipal" aria-expanded="false" aria-label="Abrir menu de navegação">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="menuPrincipal">
+          <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-lg-center">
+            <li class="nav-item"><a class="nav-link active" href="#inicio">Início</a></li>
+            <li class="nav-item"><a class="nav-link" href="#cardapio">Cardápio</a></li>
+            <li class="nav-item"><a class="nav-link" href="#promocoes">Promoções</a></li>
+            <li class="nav-item"><a class="nav-link" href="#instagram">Instagram</a></li>
+            <li class="nav-item"><a class="nav-link" href="#localizacao">Localização</a></li>
+            <li class="nav-item ms-lg-3">
+              <a class="btn-whatsapp-header" href="https://api.whatsapp.com/send?phone=557598546802&text=Ol%C3%A1,+vim+atrav%C3%A9s+do+seu+Site!" target="_blank" rel="noopener noreferrer">
+                <i class="bi bi-whatsapp" aria-hidden="true"></i> WhatsApp
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <!-- ============================================
+       HERO
+       ============================================ -->
+  <section class="hero" id="inicio">
+    <div class="container position-relative">
+      <div class="row align-items-center g-4">
+        <div class="col-lg-6 text-center text-lg-start">
+          <span class="hero-tagline animate-fade-up">✨ Feito sob encomenda</span>
+          <h1 class="hero-title animate-fade-up delay-1">Bolos, Salgados e Doces</h1>
+          <p class="hero-subtitle animate-fade-up delay-2">Sabores artesanais preparados com carinho para sua família e seus eventos.</p>
+          <p class="hero-subtitle animate-fade-up delay-2">Marcia Cake's — qualidade e tradição em Euclides da Cunha, BA.</p>
+          <div class="hero-actions animate-fade-up delay-3">
+            <a href="#cardapio" class="btn-hero-primary"><i class="bi bi-book" aria-hidden="true"></i> Ver Cardápio</a>
+            <a href="https://api.whatsapp.com/send?phone=557598546802&text=Ol%C3%A1,+vim+atrav%C3%A9s+do+seu+Site!" target="_blank" rel="noopener noreferrer" class="btn-hero-outline"><i class="bi bi-whatsapp" aria-hidden="true"></i> Encomendar</a>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="hero-image-wrapper animate-fade-up delay-2">
+            <img class="hero-image" src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=800&q=80&auto=format&fit=crop" alt="Bolo artesanal decorado da Marcia Cake's" loading="eager" width="800" height="600">
+            <div class="hero-badge"><i class="bi bi-star-fill" aria-hidden="true"></i> Encomendas personalizadas</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================
+       NAVEGAÇÃO DE CATEGORIAS
+       ============================================ -->
+  <nav class="category-nav" aria-label="Categorias do cardápio">
+    <div class="container">
+      <div class="category-nav-inner" role="tablist">
+        <button class="category-chip active" data-category="todos" role="tab" aria-selected="true"><i class="bi bi-grid-3x3-gap" aria-hidden="true"></i> Todos</button>
+        <button class="category-chip" data-category="bolos" role="tab" aria-selected="false"><i class="bi bi-cake2" aria-hidden="true"></i> Bolos</button>
+        <button class="category-chip" data-category="salgados" role="tab" aria-selected="false"><i class="bi bi-egg-fried" aria-hidden="true"></i> Salgados</button>
+        <button class="category-chip" data-category="doces" role="tab" aria-selected="false"><i class="bi bi-cupcake" aria-hidden="true"></i> Doces</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ============================================
+       CARDÁPIO
+       ============================================ -->
+  <main id="cardapio">
+    <div class="container">
+
+      <!-- BOLOS -->
+      <section class="menu-section" data-section="bolos" aria-labelledby="titulo-bolos">
+        <div class="menu-section-header">
+          <div class="menu-section-icon" aria-hidden="true">🎂</div>
+          <div>
+            <h2 class="menu-section-title" id="titulo-bolos">Bolos</h2>
+            <p class="menu-section-desc">Bolos artesanais para todas as ocasiões — sob encomenda</p>
+          </div>
+        </div>
+        <div class="row g-4" id="grid-bolos">
+          <!-- Produtos inseridos via JavaScript -->
+        </div>
+      </section>
+
+      <div class="section-divider"></div>
+
+      <!-- SALGADOS -->
+      <section class="menu-section" data-section="salgados" aria-labelledby="titulo-salgados">
+        <div class="menu-section-header">
+          <div class="menu-section-icon" aria-hidden="true">🥟</div>
+          <div>
+            <h2 class="menu-section-title" id="titulo-salgados">Salgados</h2>
+            <p class="menu-section-desc">Salgados fritos e assados feitos na hora — ideais para festas</p>
+          </div>
+        </div>
+        <div class="row g-4" id="grid-salgados">
+          <!-- Produtos inseridos via JavaScript -->
+        </div>
+      </section>
+
+      <div class="section-divider"></div>
+
+      <!-- DOCES -->
+      <section class="menu-section" data-section="doces" aria-labelledby="titulo-doces">
+        <div class="menu-section-header">
+          <div class="menu-section-icon" aria-hidden="true">🧁</div>
+          <div>
+            <h2 class="menu-section-title" id="titulo-doces">Doces</h2>
+            <p class="menu-section-desc">Doces finos e sobremesas para adoçar seu dia</p>
+          </div>
+        </div>
+        <div class="row g-4" id="grid-doces">
+          <!-- Produtos inseridos via JavaScript -->
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- ============================================
+       PROMOÇÕES
+       ============================================ -->
+  <section class="promo-section py-5" id="promocoes" style="background: linear-gradient(135deg, #FDF8F3, #F7EDE2);">
+    <div class="container">
+      <div class="text-center mb-5">
+        <h2 class="hero-title" style="font-size: clamp(1.6rem, 4vw, 2.2rem);">Promoções em Vigor</h2>
+        <p class="hero-subtitle">Aproveite nossos descontos especiais</p>
+      </div>
+      <div class="row g-4 justify-content-center">
+        <div class="col-md-6 col-lg-5">
+          <div class="promo-card">
+            <span class="promo-badge">5% OFF</span>
+            <p class="promo-date"><i class="bi bi-calendar-event" aria-hidden="true"></i> 01 a 31 de Dezembro</p>
+            <h3 class="promo-title">Promoção de Natal</h3>
+            <p class="promo-desc">Qualquer encomenda com 5% de desconto para deixar sua ceia ainda mais especial!</p>
+            <a href="https://api.whatsapp.com/send?phone=557598546802&text=Ol%C3%A1,+quero+aproveitar+a+Promo%C3%A7%C3%A3o+de+Natal!" target="_blank" rel="noopener noreferrer" class="btn-product"><i class="bi bi-whatsapp" aria-hidden="true"></i> Aproveitar</a>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-5">
+          <div class="promo-card">
+            <span class="promo-badge">5% OFF</span>
+            <p class="promo-date"><i class="bi bi-calendar-event" aria-hidden="true"></i> 01 a 30 de Maio</p>
+            <h3 class="promo-title">Promoção das Mães</h3>
+            <p class="promo-desc">Doces e Bolos com 5% de desconto para comemorar o Dia das Mães.</p>
+            <a href="https://api.whatsapp.com/send?phone=557598546802&text=Ol%C3%A1,+quero+aproveitar+a+Promo%C3%A7%C3%A3o+das+M%C3%A3es!" target="_blank" rel="noopener noreferrer" class="btn-product"><i class="bi bi-whatsapp" aria-hidden="true"></i> Aproveitar</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================
+       INSTAGRAM
+       ============================================ -->
+  <section class="instagram-section" id="instagram">
+    <div class="container">
+      <div class="instagram-header">
+        <h2 class="hero-title" style="font-size: clamp(1.6rem, 4vw, 2.2rem);">Siga no Instagram</h2>
+        <p class="hero-subtitle">Veja nossos trabalhos mais recentes e novidades</p>
+        <a href="https://www.instagram.com/marcia.cake5/" target="_blank" rel="noopener noreferrer" class="instagram-handle">
+          <i class="bi bi-instagram" aria-hidden="true"></i> @marcia.cake5
+        </a>
+      </div>
+      <div class="insta-grid" id="instaGrid">
+        <!-- Itens inseridos via JavaScript -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================
+       LOCALIZAÇÃO / CONTATO
+       ============================================ -->
+  <section class="contact-section" id="localizacao">
+    <div class="container">
+      <div class="text-center mb-5">
+        <h2 class="hero-title" style="font-size: clamp(1.6rem, 4vw, 2.2rem);">Localização & Contato</h2>
+        <p class="hero-subtitle">Venha nos visitar ou faça sua encomenda</p>
+      </div>
+      <div class="row g-4">
+        <div class="col-lg-5">
+          <div class="row g-4">
+            <div class="col-sm-6 col-lg-12">
+              <div class="info-card">
+                <div class="info-icon" aria-hidden="true"><i class="bi bi-geo-alt-fill"></i></div>
+                <h3 class="info-title">Endereço</h3>
+                <p class="info-text">Estr. p/ Cumbé de Cima, 7<br>Euclides da Cunha, BA<br>CEP 48500-000</p>
+              </div>
+            </div>
+            <div class="col-sm-6 col-lg-12">
+              <div class="info-card">
+                <div class="info-icon" aria-hidden="true"><i class="bi bi-telephone-fill"></i></div>
+                <h3 class="info-title">Contato</h3>
+                <p class="info-text">
+                  <a href="https://api.whatsapp.com/send?phone=557598546802&text=Ol%C3%A1,+vim+atrav%C3%A9s+do+seu+Site!" target="_blank" rel="noopener noreferrer">(+75) 9 9854-6802</a><br>
+                  <a href="mailto:marcia.gife@gmail.com">marcia.gife@gmail.com</a>
+                </p>
+              </div>
+            </div>
+            <div class="col-12">
+              <a href="https://www.google.com/maps?ll=-10.501816,-39.019423&z=16&q=Estr.+p/+Cumb%C3%A9+de+Cima,+7+-+Euclides+da+Cunha,+BA,+48500-000" target="_blank" rel="noopener noreferrer" class="btn-hero-primary w-100 justify-content-center">
+                <i class="bi bi-map" aria-hidden="true"></i> Abrir no Google Maps
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-7">
+          <div class="map-wrapper">
+            <iframe
+              src="https://www.google.com/maps?q=Estr.+p/+Cumb%C3%A9+de+Cima,+7+-+Euclides+da+Cunha,+BA,+48500-000&output=embed"
+              title="Mapa da localização da Marcia Cake's"
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+              allowfullscreen></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================
+       FOOTER
+       ============================================ -->
+  <footer class="footer">
+    <div class="container">
+      <div class="row g-4">
+        <div class="col-lg-4 col-md-6">
+          <div class="footer-brand"><span aria-hidden="true">🍰</span> Marcia Cake's</div>
+          <p class="footer-text">Bolos, salgados e doces artesanais feitos sob encomenda com ingredientes selecionados e muito carinho.</p>
+          <div class="social-links">
+            <a class="social-link whatsapp" href="https://api.whatsapp.com/send?phone=557598546802&text=Ol%C3%A1,+vim+atrav%C3%A9s+do+seu+Site!" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp"><i class="bi bi-whatsapp" aria-hidden="true"></i></a>
+            <a class="social-link instagram" href="https://www.instagram.com/marcia.cake5/" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><i class="bi bi-instagram" aria-hidden="true"></i></a>
+            <a class="social-link" href="mailto:marcia.gife@gmail.com" aria-label="E-mail"><i class="bi bi-envelope-fill" aria-hidden="true"></i></a>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-6 col-6">
+          <h4 class="footer-title">Navegação</h4>
+          <ul class="footer-links">
+            <li><a href="#inicio"><i class="bi bi-chevron-right" aria-hidden="true"></i> Início</a></li>
+            <li><a href="#cardapio"><i class="bi bi-chevron-right" aria-hidden="true"></i> Cardápio</a></li>
+            <li><a href="#promocoes"><i class="bi bi-chevron-right" aria-hidden="true"></i> Promoções</a></li>
+            <li><a href="#instagram"><i class="bi bi-chevron-right" aria-hidden="true"></i> Instagram</a></li>
+          </ul>
+        </div>
+        <div class="col-lg-3 col-md-6 col-6">
+          <h4 class="footer-title">Categorias</h4>
+          <ul class="footer-links">
+            <li><a href="#cardapio" data-cat-link="bolos"><i class="bi bi-cake2" aria-hidden="true"></i> Bolos</a></li>
+            <li><a href="#cardapio" data-cat-link="salgados"><i class="bi bi-egg-fried" aria-hidden="true"></i> Salgados</a></li>
+            <li><a href="#cardapio" data-cat-link="doces"><i class="bi bi-cupcake" aria-hidden="true"></i> Doces</a></li>
+          </ul>
+        </div>
+        <div class="col-lg-2 col-md-6">
+          <h4 class="footer-title">Contato</h4>
+          <ul class="footer-links">
+            <li><a href="https://api.whatsapp.com/send?phone=557598546802" target="_blank" rel="noopener noreferrer"><i class="bi bi-whatsapp" aria-hidden="true"></i> WhatsApp</a></li>
+            <li><a href="mailto:marcia.gife@gmail.com"><i class="bi bi-envelope" aria-hidden="true"></i> E-mail</a></li>
+            <li><a href="#localizacao"><i class="bi bi-geo-alt" aria-hidden="true"></i> Endereço</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom text-center">
+        <p class="mb-0">© 2024 Marcia Cake's. Todos os direitos reservados. Design by <a href="https://github.com/zeroqinmoon" target="_blank" rel="noopener noreferrer">ZeroQinMoon</a></p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ============================================
+       BOTÕES FLUTUANTES
+       ============================================ -->
+  <a class="whatsapp-float" href="https://api.whatsapp.com/send?phone=557598546802&text=Ol%C3%A1,+vim+atrav%C3%A9s+do+seu+Site!" target="_blank" rel="noopener noreferrer" aria-label="Conversar no WhatsApp">
+    <i class="bi bi-whatsapp" aria-hidden="true"></i>
+  </a>
+
+  <button class="back-to-top" id="backToTop" aria-label="Voltar ao topo">
+    <i class="bi bi-arrow-up" aria-hidden="true"></i>
+  </button>
+
+  <!-- ============================================
+       JAVASCRIPT
+       ============================================ -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous" defer></script>
+
+  <script>
+    /* ============================================================
+       DADOS DO CARDÁPIO — EDITE AQUI PARA ALTERAR PRODUTOS
+       ============================================================
+       Para adicionar um produto, copie um bloco { ... } e cole
+       dentro da lista desejada. Mantenha a vírgula entre os itens.
+
+       Campos:
+         nome        -> Nome do produto
+         descricao   -> Descrição curta
+         preco       -> Preço (ex: "R$ 35,00")
+         imagem      -> URL da imagem
+         categoria   -> "bolos" | "salgados" | "doces"
+         destaque    -> true para mostrar selo "Destaque"
+         novo        -> true para mostrar selo "Novo"
+         disponivel  -> false para marcar como indisponível
+    ============================================================ */
+    const PRODUTOS = [
+      // ---------- BOLOS ----------
+      {
+        nome: "Bolo de Chocolate",
+        descricao: "Bolo fofinho de chocolate com cobertura cremosa e granulado.",
+        preco: "R$ 45,00",
+        imagem: "https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=600&q=80&auto=format&fit=crop",
+        categoria: "bolos",
+        destaque: true
+      },
+      {
+        nome: "Bolo de Morango",
+        descricao: "Massa leve com recheio de morangos frescos e chantilly.",
+        preco: "R$ 55,00",
+        imagem: "https://images.unsplash.com/photo-1565958011703-44f9829ba187?w=600&q=80&auto=format&fit=crop",
+        categoria: "bolos"
+      },
+      {
+        nome: "Bolo de Cenoura",
+        descricao: "Clássico bolo de cenoura com cobertura generosa de chocolate.",
+        preco: "R$ 40,00",
+        imagem: "https://images.unsplash.com/photo-1621303837174-89787a7d4729?w=600&q=80&auto=format&fit=crop",
+        categoria: "bolos"
+      },
+      {
+        nome: "Bolo Red Velvet",
+        descricao: "Massa vermelha aveludada com recheio de cream cheese.",
+        preco: "R$ 65,00",
+        imagem: "https://images.unsplash.com/photo-1586985289906-406988974504?w=600&q=80&auto=format&fit=crop",
+        categoria: "bolos",
+        novo: true
+      },
+      {
+        nome: "Bolo de Prestígio",
+        descricao: "Massa de chocolate com recheio de coco e leite condensado.",
+        preco: "R$ 50,00",
+        imagem: "https://images.unsplash.com/photo-1606890737304-57a1ca8a5b62?w=600&q=80&auto=format&fit=crop",
+        categoria: "bolos"
+      },
+      {
+        nome: "Bolo de Aniversário",
+        descricao: "Bolo personalizado para sua festa — escolha o sabor e a decoração.",
+        preco: "Sob consulta",
+        imagem: "https://images.unsplash.com/photo-1535141192574-5d4897c12636?w=600&q=80&auto=format&fit=crop",
+        categoria: "bolos",
+        destaque: true
+      },
+
+      // ---------- SALGADOS ----------
+      {
+        nome: "Coxinha",
+        descricao: "Coxinha de frango cremosa, empanada e frita na hora.",
+        preco: "R$ 6,00",
+        imagem: "https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?w=600&q=80&auto=format&fit=crop",
+        categoria: "salgados",
+        destaque: true
+      },
+      {
+        nome: "Esfiha",
+        descricao: "Esfiha aberta ou fechada — sabores carne, frango ou queijo.",
+        preco: "R$ 7,00",
+        imagem: "https://images.unsplash.com/photo-1600628421060-9396395170e3?w=600&q=80&auto=format&fit=crop",
+        categoria: "salgados"
+      },
+      {
+        nome: "Pastel",
+        descricao: "Pastel crocante com recheios variados: carne, queijo, pizza e mais.",
+        preco: "R$ 8,00",
+        imagem: "https://images.unsplash.com/photo-1615719413546-198b25453f85?w=600&q=80&auto=format&fit=crop",
+        categoria: "salgados"
+      },
+      {
+        nome: "Empadinha",
+        descricao: "Empadinha de massa podre com recheio de frango ou palmito.",
+        preco: "R$ 5,50",
+        imagem: "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=600&q=80&auto=format&fit=crop",
+        categoria: "salgados"
+      },
+      {
+        nome: "Kibe",
+        descricao: "Kibe frito crocante por fora e macio por dentro.",
+        preco: "R$ 6,50",
+        imagem: "https://images.unsplash.com/photo-1541529086526-db283c563270?w=600&q=80&auto=format&fit=crop",
+        categoria: "salgados"
+      },
+      {
+        nome: "Bolinha de Queijo",
+        descricao: "Bolinhas de queijo douradas e irresistíveis.",
+        preco: "R$ 5,00",
+        imagem: "https://images.unsplash.com/photo-1531749668029-2db88e4276c7?w=600&q=80&auto=format&fit=crop",
+        categoria: "salgados",
+        novo: true
+      },
+
+      // ---------- DOCES ----------
+      {
+        nome: "Brigadeiro Gourmet",
+        descricao: "Brigadeiro cremoso feito com chocolate nobre.",
+        preco: "R$ 3,50",
+        imagem: "https://images.unsplash.com/photo-1548907040-4baa42d10919?w=600&q=80&auto=format&fit=crop",
+        categoria: "doces",
+        destaque: true
+      },
+      {
+        nome: "Cupcake Decorado",
+        descricao: "Cupcakes fofinhos com cobertura e decoração personalizada.",
+        preco: "R$ 8,00",
+        imagem: "https://images.unsplash.com/photo-1614707267537-b85aaf00c4b7?w=600&q=80&auto=format&fit=crop",
+        categoria: "doces"
+      },
+      {
+        nome: "Torta de Limão",
+        descricao: "Torta refrescante com creme de limão e merengue.",
+        preco: "R$ 42,00",
+        imagem: "https://images.unsplash.com/photo-1519915028121-7d3463d20b13?w=600&q=80&auto=format&fit=crop",
+        categoria: "doces"
+      },
+      {
+        nome: "Beijinho",
+        descricao: "Doce de coco tradicional, perfeito para festas.",
+        preco: "R$ 3,50",
+        imagem: "https://images.unsplash.com/photo-1590080875515-8a3a8dc5735e?w=600&q=80&auto=format&fit=crop",
+        categoria: "doces"
+      },
+      {
+        nome: "Pudim de Leite",
+        descricao: "Pudim cremoso com calda de caramelo.",
+        preco: "R$ 25,00",
+        imagem: "https://images.unsplash.com/photo-1624353365286-3f8d62daad51?w=600&q=80&auto=format&fit=crop",
+        categoria: "doces"
+      },
+      {
+        nome: "Bolo no Pote",
+        descricao: "Camadas de bolo e recheio servidas no pote — prático e delicioso.",
+        preco: "R$ 12,00",
+        imagem: "https://images.unsplash.com/photo-1588195538326-c5b1e9f80a1b?w=600&q=80&auto=format&fit=crop",
+        categoria: "doces",
+        novo: true
+      }
+    ];
+
+    /* ============================================================
+       RENDERIZAÇÃO DOS PRODUTOS
+       ============================================================ */
+    const WHATSAPP_NUM = "557598546802";
+    const MSG_PADRAO = encodeURIComponent("Olá, vim através do seu Site! Gostaria de fazer uma encomenda.");
+
+    function criarCardProduto(produto) {
+      const col = document.createElement('div');
+      col.className = 'col-sm-6 col-lg-4 product-card-wrapper';
+      col.setAttribute('data-categoria', produto.categoria);
+
+      const indisponivel = produto.disponivel === false;
+      const badges = [];
+      if (produto.destaque) badges.push('<span class="product-badge badge-destaque">⭐ Destaque</span>');
+      if (produto.novo) badges.push('<span class="product-badge badge-novo">Novo</span>');
+      if (indisponivel) badges.push('<span class="product-badge badge-indisponivel">Indisponível</span>');
+
+      const mensagem = encodeURIComponent(`Olá! Gostaria de encomendar: ${produto.nome}`);
+      const link = `https://api.whatsapp.com/send?phone=${WHATSAPP_NUM}&text=${mensagem}`;
+
+      col.innerHTML = `
+        <article class="product-card" aria-label="${produto.nome}">
+          <div class="product-img-wrapper">
+            <img class="product-img" src="${produto.imagem}" alt="${produto.nome}" loading="lazy" width="600" height="375">
+            ${badges.join('')}
+          </div>
+          <div class="product-body">
+            <h3 class="product-name">${produto.nome}</h3>
+            <p class="product-desc">${produto.descricao}</p>
+            <div class="product-footer">
+              <span class="product-price">${produto.preco}</span>
+              ${indisponivel
+                ? '<span class="btn-product" style="opacity:.6;cursor:not-allowed;">Indisponível</span>'
+                : `<a href="${link}" target="_blank" rel="noopener noreferrer" class="btn-product" aria-label="Encomendar ${produto.nome} pelo WhatsApp"><i class="bi bi-whatsapp" aria-hidden="true"></i> Pedir</a>`}
+            </div>
+          </div>
+        </article>
+      `;
+      return col;
+    }
+
+    function renderizarProdutos() {
+      const grids = {
+        bolos: document.getElementById('grid-bolos'),
+        salgados: document.getElementById('grid-salgados'),
+        doces: document.getElementById('grid-doces')
+      };
+
+      // Limpa
+      Object.values(grids).forEach(g => { if (g) g.innerHTML = ''; });
+
+      PRODUTOS.forEach(produto => {
+        const grid = grids[produto.categoria];
+        if (grid) grid.appendChild(criarCardProduto(produto));
+      });
+
+      // Observa os cards para animação
+      observarCards();
+    }
+
+    /* ============================================================
+       ANIMAÇÃO DE ENTRADA DOS CARDS
+       ============================================================ */
+    let observer;
+    function observarCards() {
+      if (!('IntersectionObserver' in window)) {
+        document.querySelectorAll('.product-card').forEach(c => c.classList.add('visible'));
+        return;
+      }
+      if (observer) observer.disconnect();
+      observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+      document.querySelectorAll('.product-card').forEach((card, i) => {
+        card.style.transitionDelay = `${(i % 3) * 60}ms`;
+        observer.observe(card);
+      });
+    }
+
+    /* ============================================================
+       FILTRO POR CATEGORIA
+       ============================================================ */
+    function configurarFiltroCategorias() {
+      const chips = document.querySelectorAll('.category-chip');
+      const sections = document.querySelectorAll('.menu-section');
+      const wrappers = document.querySelectorAll('.product-card-wrapper');
+
+      function ativarCategoria(cat) {
+        chips.forEach(c => {
+          const ativo = c.dataset.category === cat;
+          c.classList.toggle('active', ativo);
+          c.setAttribute('aria-selected', ativo ? 'true' : 'false');
+        });
+
+        wrappers.forEach(w => {
+          const mostrar = cat === 'todos' || w.dataset.categoria === cat;
+          w.style.display = mostrar ? '' : 'none';
+        });
+
+        sections.forEach(s => {
+          const mostrar = cat === 'todos' || s.dataset.section === cat;
+          s.style.display = mostrar ? '' : 'none';
+        });
+
+        // Re-observa após filtro
+        setTimeout(observarCards, 50);
+      }
+
+      chips.forEach(chip => {
+        chip.addEventListener('click', () => {
+          ativarCategoria(chip.dataset.category);
+          // Rola suavemente até o topo do cardápio
+          const cardapio = document.getElementById('cardapio');
+          if (cardapio) {
+            const top = cardapio.getBoundingClientRect().top + window.pageYOffset - 80;
+            window.scrollTo({ top, behavior: 'smooth' });
+          }
+        });
+      });
+
+      // Links do footer
+      document.querySelectorAll('[data-cat-link]').forEach(link => {
+        link.addEventListener('click', (e) => {
+          const cat = link.dataset.catLink;
+          ativarCategoria(cat);
+        });
+      });
+    }
+
+    /* ============================================================
+       GRID INSTAGRAM (placeholder visual)
+       ============================================================ */
+    const INSTA_IMAGENS = [
+      "https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=400&q=80&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1565958011703-44f9829ba187?w=400&q=80&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1586985289906-406988974504?w=400&q=80&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1614707267537-b85aaf00c4b7?w=400&q=80&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1621303837174-89787a7d4729?w=400&q=80&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1535141192574-5d4897c12636?w=400&q=80&auto=format&fit=crop"
+    ];
+
+    function renderizarInstagram() {
+      const grid = document.getElementById('instaGrid');
+      if (!grid) return;
+      INSTA_IMAGENS.forEach((url, i) => {
+        const item = document.createElement('a');
+        item.className = 'insta-item';
+        item.href = 'https://www.instagram.com/marcia.cake5/';
+        item.target = '_blank';
+        item.rel = 'noopener noreferrer';
+        item.setAttribute('aria-label', `Ver publicação ${i + 1} no Instagram`);
+        item.innerHTML = `
+          <img src="${url}" alt="Publicação do Instagram da Marcia Cake's" loading="lazy" width="400" height="400">
+          <div class="insta-overlay"><i class="bi bi-instagram me-2"></i> Ver no Instagram</div>
+        `;
+        grid.appendChild(item);
+      });
+    }
+
+    /* ============================================================
+       HEADER: SCROLL E NAVEGAÇÃO ATIVA
+       ============================================================ */
+    function configurarHeader() {
+      const header = document.getElementById('header');
+      const backToTop = document.getElementById('backToTop');
+      const navLinks = document.querySelectorAll('.header .nav-link');
+      const sections = ['inicio', 'cardapio', 'promocoes', 'instagram', 'localizacao'];
+
+      function onScroll() {
+        const y = window.scrollY;
+        header.classList.toggle('scrolled', y > 20);
+        backToTop.classList.toggle('show', y > 400);
+
+        // Seção ativa
+        let atual = 'inicio';
+        sections.forEach(id => {
+          const el = document.getElementById(id);
+          if (el && el.getBoundingClientRect().top <= 120) atual = id;
+        });
+        navLinks.forEach(l => {
+          l.classList.toggle('active', l.getAttribute('href') === '#' + atual);
+        });
+      }
+
+      window.addEventListener('scroll', onScroll, { passive: true });
+      onScroll();
+
+      backToTop.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    }
+
+    /* ============================================================
+       FECHAR MENU MOBILE AO CLICAR EM LINK
+       ============================================================ */
+    function configurarMenuMobile() {
+      const collapse = document.getElementById('menuPrincipal');
+      if (!collapse) return;
+      document.querySelectorAll('#menuPrincipal .nav-link, #menuPrincipal .btn-whatsapp-header').forEach(link => {
+        link.addEventListener('click', () => {
+          if (window.innerWidth < 992 && collapse.classList.contains('show')) {
+            const bsCollapse = bootstrap.Collapse.getInstance(collapse) || new bootstrap.Collapse(collapse, { toggle: false });
+            bsCollapse.hide();
+          }
+        });
+      });
+    }
+
+    /* ============================================================
+       INICIALIZAÇÃO
+       ============================================================ */
+    document.addEventListener('DOMContentLoaded', () => {
+      renderizarProdutos();
+      configurarFiltroCategorias();
+      renderizarInstagram();
+      configurarHeader();
+      configurarMenuMobile();
+    });
+  </script>
+</body>
+</html>
